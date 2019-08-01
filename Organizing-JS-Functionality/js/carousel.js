@@ -27,7 +27,7 @@ var Carousel = (function carousel() {
         var element = event.target;
         var id = element.dataset.id.replace(/^.*(\d+)$/, '$1');
 
-        Details.loadPerson(id);
+        EVENT.emit('person-selected', id);
     }
 
     var $content = $('[rel=js-carousel] > [rel=js-content]');
@@ -50,9 +50,11 @@ var Carousel = (function carousel() {
         $items.on('click', '.item', clickPerson);
     }
 
-    var publicAPI = {
-        init
-    };
+    EVENT.on('init', init);
 
-    return publicAPI;
+    // var publicAPI = {
+    //     init
+    // };
+
+    // return publicAPI;
 })();

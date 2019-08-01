@@ -9,14 +9,26 @@ var Details = (function details() {
             });
     }
 
-    function init() {
-        $content = $('[rel=js-details]');
+    function selectPerson(event) {
+        event.preventDefault();
+        var id = event.target.dataset.person;
+
+        EVENT.emit('person-selected', id);
     }
 
-    var publicAPI = {
-        init,
-        loadPerson
-    };
+    function init() {
+        $content = $('[rel=js-details]');
 
-    return publicAPI;
+        $content.on('click', '[rel="js-select-person"]', selectPerson);
+
+        EVENT.on('person-selected', loadPerson);
+    }
+
+    EVENT.on('init', init);
+
+    // var publicAPI = {
+    //     init
+    // };
+
+    // return publicAPI;
 })();

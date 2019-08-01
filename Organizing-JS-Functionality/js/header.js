@@ -23,9 +23,11 @@ var Header = (function header(params) {
         controls.addEventListener('click', openPopup);
     }
 
-    var publicAPI = {
-        init
-    };
+    EVENT.on('init', init);
 
-    return publicAPI;
+    // var publicAPI = {
+    //     init
+    // };
+
+    // return publicAPI;
 })();
