@@ -10,7 +10,7 @@ var Carousel = (function carousel() {
         
         $items.css({ left: `${-position}px` });
     }
-    
+
     function scrollRight(evt){
         evt.preventDefault();
         evt.stopPropagation();
@@ -22,7 +22,7 @@ var Carousel = (function carousel() {
         
         $items.css({ left: `${-position}px` });
     }
-    
+
     var $content = $('[rel=js-carousel] > [rel=js-content]');
     var $items = $content.children('[rel=js-items]');
     var $left;
@@ -32,7 +32,7 @@ var Carousel = (function carousel() {
     var itemsWidth = $items.width();
     var position = 0;
     var maxPosition = (itemsWidth - contentWidth);
-    
+
     function init() {
         $left = $('[rel=js-carousel] > [rel=js-controls] > [rel=js-left]');
         $right = $('[rel=js-carousel] > [rel=js-controls] > [rel=js-right]');

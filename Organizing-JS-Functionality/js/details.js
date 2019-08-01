@@ -1,7 +1,7 @@
 var Details = (function details() {
     var $items;
-    var $content = $('[rel=js-details]');
-    
+    var $content;
+
     function loadPerson(event) {
         var element = event.target;
         var id = element.dataset.id.replace(/^.*(\d+)$/, '$1');
@@ -14,6 +14,8 @@ var Details = (function details() {
 
     function init() {
         $items = $('[rel=js-carousel] > [rel=js-content] > [rel=js-items]');
+        $content = $('[rel=js-details]');
+
         $items.on('click', '.item', loadPerson);
     }
 
