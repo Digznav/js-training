@@ -31,6 +31,10 @@ var Carousel = (function() {
 		$items.css({ left: (-position) + "px" });
 	}
 
+	function clickPerson(evt){
+		// var ID = $(evt.target),attr("rel").
+	}
+
 	function init() {
 		var $left = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-left]");
 		var $right = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-right]");
