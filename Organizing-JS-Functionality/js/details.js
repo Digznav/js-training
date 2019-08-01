@@ -2,10 +2,7 @@ var Details = (function details() {
     var $items;
     var $content;
 
-    function loadPerson(event) {
-        var element = event.target;
-        var id = element.dataset.id.replace(/^.*(\d+)$/, '$1');
-
+    function loadPerson(id) {
         $.ajax(`details/${id}.html`, { dataType: 'text' })
             .then(function response(contents) {
                 $content.html(contents);
@@ -13,17 +10,13 @@ var Details = (function details() {
     }
 
     function init() {
-        $items = $('[rel=js-carousel] > [rel=js-content] > [rel=js-items]');
         $content = $('[rel=js-details]');
-
-        $items.on('click', '.item', loadPerson);
     }
 
     var publicAPI = {
-        init
+        init,
+        loadPerson
     };
 
     return publicAPI;
 })();
-
-$(document).ready(Details.init);

@@ -23,6 +23,13 @@ var Carousel = (function carousel() {
         $items.css({ left: `${-position}px` });
     }
 
+    function clickPerson(event) {
+        var element = event.target;
+        var id = element.dataset.id.replace(/^.*(\d+)$/, '$1');
+
+        Details.loadPerson(id);
+    }
+
     var $content = $('[rel=js-carousel] > [rel=js-content]');
     var $items = $content.children('[rel=js-items]');
     var $left;
@@ -39,6 +46,8 @@ var Carousel = (function carousel() {
 
         $left.on('click', scrollLeft);
         $right.on('click', scrollRight);
+
+        $items.on('click', '.item', clickPerson);
     }
 
     var publicAPI = {
@@ -47,5 +56,3 @@ var Carousel = (function carousel() {
 
     return publicAPI;
 })();
-
-$(document).ready(Carousel.init);

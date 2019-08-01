@@ -29,5 +29,3 @@ var Header = (function header(params) {
 
     return publicAPI;
 })();
-
-$(document).ready(Header.init);
