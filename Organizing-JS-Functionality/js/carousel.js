@@ -31,6 +31,12 @@ var Carousel = (function() {
 		$items.css({ left: (-position) + "px" });
 	}
 
+	function clickedPerson(e) {
+		var ID = $(e.target).attr('rel').replace('js-item-', '');
+
+		EVT.emit('person-selected', ID);
+	}
+
 	function init() {
 		var $left = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-left]");
 		var $right = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-right]");
@@ -44,11 +50,8 @@ var Carousel = (function() {
 
 		$left.on('click', scrollLeft);
 		$right.on('click', scrollRight);
+		$items.on('click', '[rel*="js-item-"]', clickedPerson);
 	}
 
-	return {
-		init
-	};
+	EVT.on('init', init);
 })();
-
-$(document).ready(Carousel.init);
