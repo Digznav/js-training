@@ -1,42 +1,67 @@
-$(document).ready(function(){
+var Carousel = (function() {
+    var $content;
+    var $items;
 
-	function scrollLeft(evt) {
-		evt.preventDefault();
-		evt.stopPropagation();
-		evt.stopImmediatePropagation();
+    var contentWidth;
+    var itemsWidth;
+    var position;
+    var maxPosition;
 
-		if (position > 0) {
-			position = Math.max(0,position - 250);
-		}
+    function scrollLeft(evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+        evt.stopImmediatePropagation();
 
-		$items.css({ left: (-position) + "px" });
-	}
+        if (position > 0) {
+            position = Math.max(0,position - 250);
+        }
 
-	function scrollRight(evt){
-		evt.preventDefault();
-		evt.stopPropagation();
-		evt.stopImmediatePropagation();
+        $items.css({ left: (-position) + "px" });
+    }
 
-		if (position < maxPosition) {
-			position = Math.min(maxPosition,position + 250);
-		}
+    function scrollRight(evt){
+        evt.preventDefault();
+        evt.stopPropagation();
+        evt.stopImmediatePropagation();
 
-		$items.css({ left: (-position) + "px" });
-	}
+        if (position < maxPosition) {
+            position = Math.min(maxPosition,position + 250);
+        }
 
-	var $content = $("[rel=js-carousel] > [rel=js-content]");
-	var $items = $content.children("[rel=js-items]");
-	var $left = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-left]");
-	var $right = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-right]");
+        $items.css({ left: (-position) + "px" });
+    }
+
+    function loadPerson(evt){
+        var ID = $(evt.target).attr('rel').replace('js-item-', '');
+
+        EVT.emit("person-selected",ID);
+    }
+
+    function init() {
+        var $left = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-left]");
+        var $right = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-right]");
+
+        $content = $("[rel=js-carousel] > [rel=js-content]");
+        $items = $content.children("[rel=js-items]");
+        contentWidth = $content.width();
+        itemsWidth = $items.width();
+        position = 0;
+        maxPosition = (itemsWidth - contentWidth);
+
+        $left.on('click', scrollLeft);
+        $right.on('click', scrollRight);
+
+        $items.on('click', '[rel*="js-item-"]', loadPerson);
+    }
+
+    EVT.on("init",init);
 
 
-	var contentWidth = $content.width();
-	var itemsWidth = $items.width();
-	var position = 0;
-	var maxPosition = (itemsWidth - contentWidth);
+    return {
+        init: init,
+        loadPerson: loadPerson
+    };
+})();
 
-	// attach click handlers for the `$left` and `$right` buttons,
-	// that call the `scrollLeft(..)` and `scrollRight(..)` functions,
-	// respectively
 
-});
+
