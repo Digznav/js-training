@@ -1,8 +1,6 @@
 var Details = (function() {
-	var $content;
 
-	function loadPerson(e) {
-		var ID = $(e.target).attr('rel').replace('js-item-', '');
+	function loadPerson(ID) {
 
 		$.ajax('details/' + ID + ".html", {
 			dataType: 'text'
@@ -12,16 +10,21 @@ var Details = (function() {
 		});
 	}
 
-	function init() {
-		var $items = $("[rel=js-carousel] > [rel=js-content] > [rel=js-items]");
-		$content = $("[rel=js-details]");
+	function selectPerson() {
+		evt.preventDefault();
+		var ID = $(evt.target).attr("data-person");
 
-		$items.on('click', '[rel*="js-item-"]', loadPerson);
+		EVT.emit("person-selected", ID);
 	}
 
-	return {
-		init
-	};
-})();
+	function init() {
+		$content = $("[rel=js-details]");
+		$content.on("click", "[rel=js-select-person]")
 
-$(document).ready(Details.init);
+		EVT.on("person-selected", loadPerson);
+	}
+
+	var $content;
+
+    EVT.on("init", init);
+})();

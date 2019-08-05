@@ -22,9 +22,5 @@ var Header = (function() {
         $controls.on('click', 'a', headerLinkClicks);
     }
 
-    return {
-        init
-    };
+    EVT.on("init", init);
 })();
-
-$(document).ready(Header.init);
