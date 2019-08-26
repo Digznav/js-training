@@ -1,24 +1,28 @@
 "use strict";
 
-function output(txt) {
-	console.log(txt);
+function not(fn) {
+    return function negated(...args) {
+        return !fn(...args);
+    }
 }
 
-function printIf(shouldPrintIt) {
-	return function(msg) {
-		if (shouldPrintIt(msg)) {
-			output(msg);
-		}
-	};
+function when(fn) {
+    return function(predicate) {
+        return function(...args) {
+            if (predicate(...args)) {
+                return fn(...args);
+            }
+        };
+    };
 }
 
 function isShortEnough(str) {
-	return str.length <= 5;
+    return str.length <= 5;
 }
 
-function isLongEnough(str) {
-	return !isShortEnough(str);
-}
+var output = console.log.bind(console);
+var printIf = when(output);
+var isLongEnough = not(isShortEnough);
 
 var msg1 = "Hello";
 var msg2 = msg1 + " World";
