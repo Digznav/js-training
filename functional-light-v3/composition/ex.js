@@ -6,27 +6,15 @@ function double(x) { return x * 2; }
 function half(x) { return x / 2; }
 
 function compose(...fns) {
-    return function composed(value) {
-        var result = fns[fns.length - 1](value);
-
-        if (fns.length > 1) {
-            for (let idx = fns.length - 2; idx >= 0; idx--) {
-                result = fns[idx](result);
-            }
-        }
-
-        return result;
-    };
+    return pipe(...fns.reverse());
 }
 function pipe(...fns) {
 
     return function piped(value) {
-        var result = fns[0](value);
+        var result = value;
 
-        if (fns.length > 1) {
-            for (let idx = 1; idx < fns.length; idx++) {
-                result = fns[idx](result);
-            }
+        for (let idx = 0; idx < fns.length; idx++) {
+            result = fns[idx](result);
         }
 
         return result;
