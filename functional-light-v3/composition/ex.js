@@ -5,8 +5,33 @@ function decrement(x) { return x - 1; }
 function double(x) { return x * 2; }
 function half(x) { return x / 2; }
 
-function compose() { return compose; }
-function pipe() { return pipe; }
+function compose(...fns) {
+    return function composed(value) {
+        var result = fns[fns.length - 1](value);
+
+        if (fns.length > 1) {
+            for (let idx = fns.length - 2; idx >= 0; idx--) {
+                result = fns[idx](result);
+            }
+        }
+
+        return result;
+    };
+}
+function pipe(...fns) {
+
+    return function piped(value) {
+        var result = fns[0](value);
+
+        if (fns.length > 1) {
+            for (let idx = 1; idx < fns.length; idx++) {
+                result = fns[idx](result);
+            }
+        }
+
+        return result;
+    }
+}
 
 var f1 = compose(increment,decrement);
 var f2 = pipe(decrement,increment);
