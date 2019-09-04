@@ -25,13 +25,12 @@ function add2(fn1, fn2) {
 }
 
 function addn(fns) {
-    var result = 0;
 
-    for (let idx = 0; idx < fns.length; idx++) {
-        result = add2(num(result), fns[idx]);
-    }
+    if (fns.length <= 1) return add2(num(0), fns[0]);
 
-    return result;
+    var result = add2(fns[0], fns[1]);
+
+    return result + addn(fns.slice(2));
 }
 
 addn([num(1), num(2), num(3), num(4), num(5)]);
