@@ -1,6 +1,14 @@
 "use strict";
 
-function isPalindrome() {}
+function isPalindrome(str) {
+    if (str == '' || str.length == 1)  return true;
+
+    var equal = str[0] == str[str.length - 1];
+
+    if (!equal) return false;
+
+    return isPalindrome(str.slice(1, -1));
+}
 
 console.log( isPalindrome("") === true );
 console.log( isPalindrome("a") === true );
